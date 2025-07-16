@@ -1,0 +1,28 @@
+name: CD - 1. Deploy Infrastructure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Infrastructure and Get Nexus Password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/final-project || git clone https://github.com/LuisVelez28/DevOpsFinal.git final-project
+            cd ~/final-project
+            git checkout main
+            git pull
+            echo "Levantando toda la infraestructura con Docker Compose..."
+            docker-compose up -d
+            echo "Esperando a que Nexus genere la contraseña inicial..."
+            sleep 60
+            echo "------------------------------------------------------------------"
+            echo "CONTRASEÑA DE NEXUS (guardar en secrets como NEXUS_PASSWORD):"
+            docker exec nexus cat /nexus-data/admin.password
+            echo "------------------------------------------------------------------"

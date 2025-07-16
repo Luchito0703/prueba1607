@@ -5,6 +5,4 @@ global:
 scrape_configs:
   - job_name: 'fastapi-app'
     static_configs:
-      # Aquí está la magia: le decimos que busque un servicio llamado 'app' en el puerto 5000.
-      # Docker Compose se encargará de que 'app' se resuelva a la IP del contenedor correcto.
       - targets: ['app:5000']

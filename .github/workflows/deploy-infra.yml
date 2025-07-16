@@ -14,7 +14,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ~/final-project || git clone https://github.com/LuisVelez28/DevOpsFinal.git final-project
+            cd ~/final-project || git clone https://github.com/Luchito0703/prueba1607.git final-project
             cd ~/final-project
             git checkout main
             git pull
